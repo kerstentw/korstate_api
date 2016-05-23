@@ -13,7 +13,7 @@ DEFAULT_URL = "http://seoul.craigslist.co.kr/search/hhh/"
 BASE_URL = "http://seoul.craigslist.co.kr"
 PAGES = 1
 DELAY = 0
-IMAGE_FRAME = "http://images.craigslist.org/{key}_600x450.jpg"
+IMAGE_FRAME = "{key}"
 
 
 if PAGES > 5:
@@ -24,7 +24,7 @@ if PAGES > 5:
 
 def room_link_process(room_suffix):
     #img_reg = re.compile(r"http://images.craigslist.org/(.*?)_600x450.jpg")
-    img_reg = re.compile(r'"shortid":"(.*?)",')
+    img_reg = re.compile(r'"url":"(.*?)",')
 
     master_url = BASE_URL + room_suffix[0]
     url_object = urllib2.urlopen(master_url)
@@ -76,7 +76,7 @@ def crawl_cl_links():
 def refresh():
     return crawl_cl_links()
 
-def getAllFormat(fields_to_display):
+def getAllFormat():
 
     outer_return = {}
     counter = 1
@@ -92,7 +92,7 @@ def runtime_manager(command = "all"):
     '''
     return com_dict[command]()
     '''
-    if command = "all":
+    if command == "all":
         return getAllFormat()
 
 #print getAllFormat()

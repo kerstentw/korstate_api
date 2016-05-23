@@ -2,6 +2,7 @@
 
 import web
 import app_func as af
+import craigs_scraper.c_scrape as cs
 
 '''
 There is a MASSIVE point of likely failure in the app_func where we 
@@ -20,8 +21,24 @@ preview = t  (Doesnt work yet)
 
 
 urls = (
-'/dbimg?(.*)','DaBang'
+'/dbimg?(.*)','DaBang',
+'/clist?(.*)','CList',
 )
+
+class CList(object):
+    def GET(self,*args):
+      
+        master = web.input()
+        
+        try:  
+            cs.PAGES = int(master['listnum'])
+             
+        except:
+            pass        
+
+        content = cs.runtime_manager()
+        cs.PAGES = 1
+        return content
 
 class DaBang(object):
     
