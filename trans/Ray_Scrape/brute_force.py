@@ -101,7 +101,7 @@ def placeInCSV(_data_dict):
 def createJSON(_data_dict):
     pass
 
-def makeRequest(_endpoint = ENDPOINT, _header):
+def makeRequest(_endpoint = ENDPOINT, _header = ""):
     resp = requests.get(_endpoint, headers = _header)
     return resp
 
