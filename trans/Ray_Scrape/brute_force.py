@@ -12,8 +12,15 @@ import requests
 import time
 import sqlite3
 from random import choice
+from DB_Handler import csvHandler
+from mongoHandler import MongoHandler
 
 #Config
+
+
+MongoConnectString = "localhost"
+DBName = "RealEstate"
+
 
 ENDPOINT = """http://rt.molit.go.kr/new/gis/getDanjiInfoDetail.do?menuGubun={gubun_type}&p_apt_code={code}&p_house_cd=1&p_acc_year={year}"""
 MAX = 5000000000
@@ -94,8 +101,8 @@ def placeInCSV(_data_dict):
 def createJSON(_data_dict):
     pass
 
-def makeRequest(_endpoint = ENDPOINT):
-    resp = requests.get(_endpoint)
+def makeRequest(_endpoint = ENDPOINT, _header):
+    resp = requests.get(_endpoint, headers = _header)
     return resp
 
 def buildIndex():
@@ -115,6 +122,9 @@ def checkRequest(_json_str):
         False
 
 
+# Mongo Setup
+
+DB_Object = MongoHandler(MongoConnectString, DBName)
 
 # Main Function
 
@@ -126,6 +136,7 @@ def runScrape():
                 resp = makeRequest(endpoint,headers = buildHeader())
 
                 if checkRequest(resp.content) == True:
-                    # Make Database Push
+                    collectionName = str(year)
+                    DB_Object.insertDocument(year, resp.content, False)
                 else:
                     pass
