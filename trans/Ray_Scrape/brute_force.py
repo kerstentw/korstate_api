@@ -139,4 +139,7 @@ def runScrape():
                     collectionName = str(year)
                     DB_Object.insertDocument(year, resp.content, False)
                 else:
-                    pass
+                    print "Req Error"
+
+
+runScrape()
