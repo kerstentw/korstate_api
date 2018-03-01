@@ -24,6 +24,7 @@ DBName = "RealEstate"
 
 ENDPOINT = """http://rt.molit.go.kr/new/gis/getDanjiInfoDetail.do?menuGubun={gubun_type}&p_apt_code={code}&p_house_cd=1&p_acc_year={year}"""
 MAX = 5000000000
+MIN = 1000000000
 YEARS = [
             "2003",
             "2004",
@@ -131,7 +132,7 @@ DB_Object = MongoHandler(MongoConnectString, DBName)
 def runScrape():
     for gub in GUBUN:
         for year in YEARS:
-            for i in range(MAX):
+            for i in range(MIN,MAX):
                 endpoint = buildMolitQueryString(gub, i, year)
                 resp = makeRequest(endpoint,headers = buildHeader())
 
